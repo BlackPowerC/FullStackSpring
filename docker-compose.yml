@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  database:
+    image: "postgres:16.6-bullseye"
+    environment:
+      - POSTGRES_PASSWORD=spring
+      - POSTGRES_DB=spring
+      - POSTGRES_USER=spring
+    volumes:
+      - ${HOME}/docker-volumes/fullstack_spring_pg16:/var/lib/postgresql/data
+      - ${PWD}/back/dump:/tmp
+    ports:
+      - "5469:5432"
+  front:
+    image: "node:22.20.0-bullseye-slim"
+    working_dir: /usr/src/myapp/front/
+    stdin_open: true
+    tty: true
+    environment:
+      - BACKEND_URL="172.30.0.1"
+    volumes:
+      - ${PWD}/front:/usr/src/myapp/front
+    ports:
+      - 4200:4200
+    networks:
+      angular_spring_network:
+        ipv4_address: 172.30.0.4
+
+networks:
+  angular_spring_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.30.0.0/24"
