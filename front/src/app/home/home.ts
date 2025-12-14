@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { HousingService } from "../housing.service";
-import type {HousingLocationInfo} from "../housing-location";
+import {HousingLocationResource} from "../housing-location";
 import {HousingLocation} from "../housing-location/housing-location";
 
 @Component({
@@ -13,11 +13,23 @@ import {HousingLocation} from "../housing-location/housing-location";
 
 export class Home
 {
-  housingService: HousingService = inject(HousingService) ;
-  housingLocationList: HousingLocationInfo[] ;
+  public errorMessage?: string ;
+  public housingService: HousingService = inject(HousingService) ;
+  public housingLocationList: Array<HousingLocationResource> | [];
+  public filteredLocationList: HousingLocationResource[] | [] ;
 
-  constructor() {
-    this.housingLocationList = this.housingService.getAllHousingLocation() ;
+  constructor()
+  {
+    this.housingService.getAllHousingLocation()
+        .then((list: Array<HousingLocationResource> | []) =>
+        {
+          this.housingLocationList = list ;
+          this.filteredLocationList = list ;
+        }).catch(err =>
+        {
+          console.error(err?.message) ;
+          this.errorMessage = err?.statusText ;
+        }) ;
   }
 
 }

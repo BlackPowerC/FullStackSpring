@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import {HousingService} from "../housing.service";
 import {ActivatedRoute} from "@angular/router";
-import type {HousingLocationInfo} from "../housing-location";
+import {HousingLocationResource} from "../housing-location";
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
@@ -15,8 +15,8 @@ export class Details
 {
   route: ActivatedRoute = inject(ActivatedRoute) ;
   housingService: HousingService = inject(HousingService) ;
-  housingLocation?: HousingLocationInfo ;
-  housingLocationId: number = -1 ;
+  housingLocation?: HousingLocationResource ;
+  housingLocationId?: "" ;
   applyForm = new FormGroup({
     firstName: new FormControl(''),
     lastName: new FormControl(''),
@@ -25,8 +25,12 @@ export class Details
 
   constructor()
   {
-    this.housingLocationId = Number(this.route.snapshot.params["id"]) ;
-    this.housingLocation = this.housingService.getHouseLocationById(this.housingLocationId) ;
+    this.housingLocationId = this.route.snapshot.params["id"] ;
+
+    this.housingService.getHouseLocationById(this.housingLocationId)
+        .then((location: HousingLocationResource) => {
+          this.housingLocation = location ;
+        });
   }
 
   submitApplication()

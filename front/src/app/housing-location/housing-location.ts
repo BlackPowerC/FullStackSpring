@@ -1,5 +1,5 @@
 import {Component, input} from '@angular/core';
-import type {HousingLocationInfo} from "../housing-location";
+import {HousingLocationResource} from "../housing-location";
 import {RouterLink} from "@angular/router";
 
 @Component({
@@ -11,5 +11,5 @@ import {RouterLink} from "@angular/router";
 })
 
 export class HousingLocation {
-  housingLocation = input.required<HousingLocationInfo>() ;
+  public housingLocation = input.required<HousingLocationResource>() ;
 }
