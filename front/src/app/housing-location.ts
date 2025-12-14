@@ -1,11 +1,14 @@
-export interface HousingLocationInfo
+import {HateoasResource, Resource} from "@lagoshny/ngx-hateoas-client";
+
+@HateoasResource("housing_locations")
+export class HousingLocationResource extends Resource
 {
-    id: number,
-    name: string,
-    city: string,
-    state: string,
-    photo: string,
-    availableUnits: number,
-    wifi: boolean,
-    laundry: boolean,
+    id?: string;
+    name: string;
+    city: string;
+    state: string;
+    photo: string;
+    availableUnits: number;
+    wifi: boolean;
+    laundry: boolean
 }
