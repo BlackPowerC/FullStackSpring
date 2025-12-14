@@ -32,4 +32,20 @@ export class Home
         }) ;
   }
 
+  filterResults(text: string | null | undefined): void
+  {
+    console.log(text) ;
+
+    if(text?.length)
+    {
+      this.filteredLocationList = this.housingLocationList.filter(housingLocation => {
+        return housingLocation?.city.toLowerCase().includes(text.toLowerCase()) ;
+      });
+
+      return ;
+    }
+
+    this.filteredLocationList = this.housingLocationList ;
+    return ;
+  }
 }
