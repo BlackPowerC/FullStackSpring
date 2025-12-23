@@ -13,8 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.List;
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
@@ -23,9 +21,12 @@ public class AppSecurityConfig
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception
     {
-        httpSecurity.cors(Customizer.withDefaults()) ;
-        httpSecurity.csrf(Customizer.withDefaults()) ;
-        httpSecurity.httpBasic(Customizer.withDefaults()) ;
+        httpSecurity
+            .authorizeHttpRequests(req -> req.anyRequest().authenticated())
+            .cors(Customizer.withDefaults())
+            .csrf(csrf -> csrf.ignoringRequestMatchers("/**"))
+            .httpBasic(Customizer.withDefaults()) ;
+
         return httpSecurity.build() ;
     }
 
