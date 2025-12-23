@@ -3,31 +3,19 @@ package org.blackpowerc.training.fullstackspring.housing;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.UUID;
+import org.blackpowerc.training.fullstackspring.BaseEntity;
 
 @Builder @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "housing_locations")
-public class HousingLocation
+public class HousingLocation extends BaseEntity
 {
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    private UUID id ;
-
     @Version @JsonIgnore
     private Integer version ;
 
@@ -48,22 +36,6 @@ public class HousingLocation
     private Boolean wifi ;
 
     private Boolean laundry ;
-
-    @CreationTimestamp
-    @Column(nullable = false)
-    private LocalDateTime createdAt ;
-
-    @Column(nullable = true)
-    @LastModifiedDate @UpdateTimestamp
-    private LocalDateTime updatedAt ;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public Integer getVersion() {
         return version;
@@ -127,37 +99,5 @@ public class HousingLocation
 
     public void setLaundry(Boolean laundry) {
         this.laundry = laundry;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        HousingLocation that = (HousingLocation) o;
-
-        return Objects.equals(this.id, that.id) ;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(this.id) ;
     }
 }
