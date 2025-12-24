@@ -6,6 +6,8 @@ import { routes } from './app.routes';
 import {provideProtractorTestingSupport} from "@angular/platform-browser";
 import {provideHttpClient, withInterceptors} from "@angular/common/http";
 import {HousingLocationResource} from "./housing-location";
+import {basicAuthInterceptor} from "./http-interceptors";
+import {ApplicationResource} from "./application";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,7 +20,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideNgxHateoasClient({
       useTypes: {
-        resources: [HousingLocationResource]
+        resources: [HousingLocationResource, ApplicationResource]
       },
       http: {
         rootUrl: "http://localhost:8080/"
