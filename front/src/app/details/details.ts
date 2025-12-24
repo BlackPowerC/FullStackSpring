@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import {HousingService} from "../housing.service";
 import {ActivatedRoute} from "@angular/router";
+import {ApplicationService} from "../services/application.service";
+import {ApplicationResource} from "../application";
 import {HousingLocationResource} from "../housing-location";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 
@@ -15,6 +17,7 @@ export class Details
 {
   route: ActivatedRoute = inject(ActivatedRoute) ;
   housingService: HousingService = inject(HousingService) ;
+  applicationService: ApplicationService = inject(ApplicationService) ;
   housingLocation?: HousingLocationResource ;
   housingLocationId?: "" ;
 
@@ -36,10 +39,20 @@ export class Details
 
   submitApplication()
   {
-    this.housingService.submitApplication(
-       this.applyForm.value.firstName ?? '',
-       this.applyForm.value.lastName ?? '',
-       this.applyForm.value.email ?? '',
+    if(this.applyForm.invalid)
+    {
+      alert("Invalid Form") ;
+      return ;
+    }
+
+    let application: ApplicationResource = new ApplicationResource() ;
+    application.email = this.applyForm.value.email ;
+    application.firstName = this.applyForm.value.firstName ;
+    application.lastName = this.applyForm.value.lastName ;
+    application.location = this.housingLocation ;
+
+    this.applicationService.submitApplication(
+        application
     ) ;
   }
 
