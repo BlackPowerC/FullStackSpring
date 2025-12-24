@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import {HousingService} from "../housing.service";
+import {Required} from "../required/required";
 import {ActivatedRoute} from "@angular/router";
 import {ApplicationService} from "../services/application.service";
 import {ApplicationResource} from "../application";
@@ -8,7 +9,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 
 @Component({
   selector: 'app-details',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Required],
   templateUrl: './details.html',
   styleUrl: './details.css',
   standalone: true

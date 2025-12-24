@@ -28,19 +28,19 @@
             Apply now to live here
         </h2>
         <form [formGroup]="applyForm" (submit)="submitApplication()">
-            <label for="first-name">First name <i>*</i></label>
+            <label for="first-name">First name <required/></label>
             <input id="first-name" type="text" formControlName="firstName"/>
             @if(firstName.invalid && (firstName.dirty || !firstName.untouched)) {
                 <i class="alert-danger">First name is required</i>
             }
 
-            <label for="last-name">Last name <i>*</i></label>
+            <label for="last-name">Last name <required/></label>
             <input id="last-name" type="text" formControlName="lastName"/>
             @if(lastName.invalid && (lastName.dirty || !lastName.untouched)) {
                 <i class="alert-danger">Last name is required</i>
             }
 
-            <label for="email">Email <i>*</i></label>
+            <label for="email">Email <required/></label>
             <input id="email" type="email" formControlName="email"/>
             @if(email.invalid && (email.dirty || !email.untouched)) {
                 @if(email.hasError("required")) {
