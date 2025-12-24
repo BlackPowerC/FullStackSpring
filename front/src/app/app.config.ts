@@ -4,7 +4,7 @@ import {CacheMode, provideNgxHateoasClient} from "@lagoshny/ngx-hateoas-client";
 
 import { routes } from './app.routes';
 import {provideProtractorTestingSupport} from "@angular/platform-browser";
-import {provideHttpClient} from "@angular/common/http";
+import {provideHttpClient, withInterceptors} from "@angular/common/http";
 import {HousingLocationResource} from "./housing-location";
 
 export const appConfig: ApplicationConfig = {
@@ -13,7 +13,9 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(
+        withInterceptors([basicAuthInterceptor])
+    ),
     provideNgxHateoasClient({
       useTypes: {
         resources: [HousingLocationResource]
