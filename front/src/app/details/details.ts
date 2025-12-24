@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import {HousingService} from "../housing.service";
 import {ActivatedRoute} from "@angular/router";
 import {HousingLocationResource} from "../housing-location";
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-details',
@@ -17,10 +17,11 @@ export class Details
   housingService: HousingService = inject(HousingService) ;
   housingLocation?: HousingLocationResource ;
   housingLocationId?: "" ;
+
   applyForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    email: new FormControl(''),
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
   }) ;
 
   constructor()
@@ -40,5 +41,17 @@ export class Details
        this.applyForm.value.lastName ?? '',
        this.applyForm.value.email ?? '',
     ) ;
+  }
+
+  get firstName() {
+    return this.applyForm.get("firstName") ;
+  }
+
+  get lastName() {
+    return this.applyForm.get("lastName") ;
+  }
+
+  get email() {
+    return this.applyForm.get("email") ;
   }
 }
