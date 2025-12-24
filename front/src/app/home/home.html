@@ -1,0 +1,17 @@
+<section>
+    <form (submit)="$event.preventDefault() ; filterResults(filter.value)">
+        <input type="text" placeholder="Filter by city or name" (change)="change($event.target.value)" #filter/>
+        <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
+    </form>
+</section>
+@if(errorMessage?.length)
+{
+    <div class="alert alert-danger">
+        {{ errorMessage }}
+    </div>
+}
+<section class="results">
+    @for (housingLocation of housingLocationList; track $index) {
+        <app-housing-location [housingLocation]="housingLocation"/>
+    }
+</section>
