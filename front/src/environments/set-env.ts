@@ -11,7 +11,7 @@ function setEnv(): void
     const envConfigFile = `export const environment = {
           apiBaseUrl: '${process.env["API_BASE_URL"]}',
           apiUser: '${process.env["API_USER"]}',
-          apiBaseUrl: '${process.env["API_BASE_URL"]}',
+          apiPassword: '${process.env["API_PASSWORD"]}',
           production: true,
         };` ;
 
