@@ -16,36 +16,42 @@ export class Home
   public errorMessage?: string ;
   public housingService: HousingService = inject(HousingService) ;
   public housingLocationList: Array<HousingLocationResource> | [];
-  public filteredLocationList: HousingLocationResource[] | [] ;
 
-  constructor()
-  {
-    this.housingService.getAllHousingLocation()
-        .then((list: Array<HousingLocationResource> | []) =>
-        {
-          this.housingLocationList = list ;
-          this.filteredLocationList = list ;
-        }).catch(err =>
-        {
-          console.error(err?.message) ;
-          this.errorMessage = err?.statusText ;
-        }) ;
+  constructor() {
+    this.filterResults('') ;
+  }
+
+  change(text: string | null | undefined): void {
+    console.log(text) ;
   }
 
   filterResults(text: string | null | undefined): void
   {
-    console.log(text) ;
-
     if(text?.length)
     {
-      this.filteredLocationList = this.housingLocationList.filter(housingLocation => {
-        return housingLocation?.city.toLowerCase().includes(text.toLowerCase()) ;
-      });
+      this.housingService.searchByCityOrName(text)
+          .then((list: Array<HousingLocationResource> | []) =>
+          {
+            this.housingLocationList = list ;
+          }).catch(err =>
+      {
+        console.error(err?.message) ;
+        this.errorMessage = err?.statusText ;
+      }) ;
 
       return ;
     }
 
-    this.filteredLocationList = this.housingLocationList ;
+    this.housingService.getAllHousingLocation()
+        .then((list: Array<HousingLocationResource> | []) =>
+        {
+          this.housingLocationList = list ;
+        }).catch(err =>
+    {
+      console.error(err?.message) ;
+      this.errorMessage = err?.statusText ;
+    }) ;
+
     return ;
   }
 }

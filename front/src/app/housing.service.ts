@@ -11,6 +11,19 @@ export class HousingService
   constructor(private resourceService: HateoasResourceService) {
   }
 
+  async searchByCityOrName(query: string): Promise<Array<HousingLocationResource> | []>
+  {
+    let pagedSearch = await lastValueFrom(this.resourceService
+        .searchPage(HousingLocationResource,"cityOrName", {
+          params: {
+            city: query,
+          }
+        })
+    ) ;
+
+    return pagedSearch.resources ?? []
+  }
+
   async getAllHousingLocation(): Promise<Array<HousingLocationResource> | []>
   {
     let pagedResource = await lastValueFrom(this.resourceService.getPage(HousingLocationResource, {})) ;
